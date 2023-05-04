@@ -29,4 +29,7 @@
   # 输入口令的时候终端中没有回显
   password = getpass.getpass('请输入口令: ')
   ```
+  
+  > 分支结构还是比较简单的，也没有讲switch。
+  
 - [x] Day4 循环结构
