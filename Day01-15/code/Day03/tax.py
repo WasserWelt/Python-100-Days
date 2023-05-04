@@ -7,6 +7,11 @@ Author: 骆昊
 Date: 2018-02-28
 """
 
+'''
+可能的改进方案：
+读取一个json修改个人所得税计算方案
+'''
+
 salary = float(input('本月收入: '))
 insurance = float(input('五险一金: '))
 diff = salary - insurance - 3500
