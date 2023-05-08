@@ -54,3 +54,38 @@
   相对而言是比较基础的
 
 - [x] Day6 函数和模块的使用
+
+  函数的定义、返回值
+
+  函数的参数
+
+  - 默认值
+  - 可变参数`*args`
+
+  用模块管理函数（同名函数）
+
+  使用`__name__`管理可执行代码
+
+  变量作用域
+
+  >  “局部作用域”---》“嵌套作用域”---》“全局作用域”---》“内置作用域”
+  >
+  > `global` `nonlocal`关键字 闭包
+
+  ```python
+  def add(*args):
+      total = 0
+      for val in args:
+          total += val
+      return total
+  
+  # __name__是Python中一个隐含的变量它代表了模块的名字
+  # 只有被Python解释器直接执行的模块的名字才是__main__
+  if __name__ == '__main__':
+      print('call foo()')
+      foo()
+      print('call bar()')
+      bar()
+  ```
+
+  
