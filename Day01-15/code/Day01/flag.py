@@ -4,22 +4,36 @@
 import turtle
 
 
-def draw_rectangle(x, y, width, height):
-    """绘制矩形"""
+def draw_rectangle(x, y, width, height,color='red'):
+    """
+    绘制矩形
+    ----------
+    x,y:起始坐标
+    width:矩形宽
+    height:矩形高
+    color:颜色，默认为'red'
+    """
     turtle.goto(x, y)
-    turtle.pencolor('red')
-    turtle.fillcolor('red')
+    turtle.pencolor(color)
+    turtle.fillcolor(color)
     turtle.begin_fill()
     for i in range(2):
+        # 即使只有两处一样的，也要写循环
         turtle.forward(width)
         turtle.left(90)
         turtle.forward(height)
         turtle.left(90)
-    turtle.end_fill()
+    turtle.end_fill() # 要把色彩填充结束
 
 
 def draw_star(x, y, radius):
-    """绘制五角星"""
+    """
+    绘制五角星
+    通过circle方法设定边角点pos
+    因此传入值不是五角星实际绘制的边长
+    而是外接圆的半径
+    放慢速度就可以看到这个路径了
+    """
     turtle.setpos(x, y)
     pos1 = turtle.pos()
     turtle.circle(-radius, 72)
