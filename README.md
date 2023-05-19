@@ -94,43 +94,43 @@ if __name__ == '__main__':
 ### Day7 字符串和常用数据结构
 {% note todo:要自己写一遍程序，学习大佬写法 %}
 
-- 字符
+#### 字符
 
-  `\`+`八进制or十六进制orUnicode`表示字符
+`\`+`八进制or十六进制orUnicode`表示字符
 
-  `r'Char'`不表示转译
+`r'Char'`不表示转译
 
-  字符串拼接、重复、成员运算、切片运算
+字符串拼接、重复、成员运算、切片运算
 
-  各种方法和函数
+各种方法和函数
 
-  格式化字符的三种写法
+格式化字符的三种写法
 
-- 列表
+#### 列表
 
-  定义、运算、遍历
+定义、运算、遍历
 
-  添加移除合并
+添加移除合并
 
-  切片（完整切片以复制，反向切片以倒转）
+切片（完整切片以复制，反向切片以倒转）
 
-  排序
+排序
 
-  **列表生成式**：Python的神奇之处
+**列表生成式**：Python的神奇之处
 
-  `yield`关键字构造**生成器函数**
+`yield`关键字构造**生成器函数**
 
-- 元组
+#### 元组
 
-  元组不可修改，适合一些环境（eg多线程，一个方法返回多个值）。元组在创建时间和占用的空间上面都优于列表。
+元组不可修改，适合一些环境（eg多线程，一个方法返回多个值）。元组在创建时间和占用的空间上面都优于列表。
 
-- 集合
+#### 集合
 
-  创建、添加、删除、交并差、对称查
+创建、添加、删除、交并差、对称差
 
-- 字典
+#### 字典
 
-  创建（`zip函数`)、获取、遍历、修改、删除、清空
+创建（`zip函数`）、获取、遍历、修改、删除、清空
 
 ### Day8 面向对象编程基础
 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
 
 ### Day9 面向对象进阶
 
-- @property 装饰器
+#### @property 装饰器
   
   目的是可以让类的属性访问比较清晰
 
@@ -158,7 +158,7 @@ if __name__ == '__main__':
 
   {% endnoteblock %}
 
-- `__slots__`的用处
+#### `__slots__`的用处
 
 ```python
 class Person(object):
@@ -172,4 +172,50 @@ class Person(object):
 
 ```
 
-- 静态方法和类方法
+#### 静态方法
+  
+  属于类但不属于对象，用`@staticmethod`装饰器。
+
+```python
+class Triangle(object):
+
+    def __init__(self, a, b, c):
+        self._a = a
+        self._b = b
+        self._c = c
+
+    @staticmethod
+    def is_valid(a, b, c):
+        return a + b > c and b + c > a and a + c > b
+
+
+def main():
+    a, b, c = 3, 4, 5
+    # 静态方法和类方法都是通过给类发消息来调用的
+    if Triangle.is_valid(a, b, c):
+        t = Triangle(a, b, c)
+```
+
+#### 类方法
+  
+  **类方法的第一个参数约定名为`cls`**，它代表的是当前类相关的信息的对象（类本身也是一个对象，有的地方也称之为类的`元数据对象`），通过这个参数我们可以**获取和类相关的信息**并且可以**创建出类的对象**
+
+```python
+class Clock(object):
+    """数字时钟"""
+
+    def __init__(self, hour=0, minute=0, second=0):
+        self._hour = hour
+        self._minute = minute
+        self._second = second
+
+    @classmethod
+    def now(cls):
+        ctime = localtime(time())
+        return cls(ctime.tm_hour, ctime.tm_min, ctime.tm_sec)
+
+
+def main():
+    # 通过类方法创建对象并获取系统时间
+    clock = Clock.now()
+```
