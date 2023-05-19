@@ -139,3 +139,37 @@ if __name__ == '__main__':
   - 封装
   - 多态
 - 私有属性和方法
+
+### Day9 面向对象进阶
+
+- @property 装饰器
+  
+  目的是可以让类的属性访问比较清晰
+
+  {% note warning::那么实际解释的时候有什么意义，以及使用时有何帮助呢？%}
+
+  {%noteblock quot::[知乎]python 装饰器详解%}
+
+  装饰器就是一个闭包，装饰器是闭包的一种应用。什么是装饰器呢，简言之，python装饰器就是用于拓展原来函数功能的一种函数，这个函数的特殊之处在于它的返回值也是一个函数，使用python装饰器的好处就是在不用更改原函数的代码前提下给函数增加新的功能。
+
+  装饰器中可以传入参数，先形成一个完整的装饰器，然后再来装饰函数，当然函数如果需要传入参数也是可以的，用不定长参数符号就可以接收，例子中传入了三个参数。
+
+  [python 装饰器详解](https://zhuanlan.zhihu.com/p/87353829)
+
+  {% endnoteblock %}
+
+- `__slots__`的用处
+
+```python
+class Person(object):
+
+  # 限定Person对象只能绑定_name, _age和_gender属性
+  __slots__ = ('_name', '_age', '_gender')
+
+  def __init__(self, name, age):
+      self._name = name
+      self._age = age
+
+```
+
+- 静态方法和类方法
