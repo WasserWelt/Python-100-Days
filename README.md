@@ -262,3 +262,195 @@ class Pet(object, metaclass=ABCMeta):
 {% note warning::metaclass是什么？ %}
 
 > 在上面的代码中，我们将`Pet`类处理成了一个抽象类，所谓抽象类就是不能够创建对象的类，这种类的存在就是专门为了让其他类去继承它。Python从语法层面并没有像Java或C#那样提供对抽象类的支持，但是我们可以通过`abc`模块的`ABCMeta`元类和`abstractmethod`包装器来达到抽象类的效果。如果一个类中**存在**抽象方法那么这个类就不能够实例化（创建对象）。上面的代码中，`Dog`和`Cat`两个子类分别对`Pet`类中的`make_voice`抽象方法进行了重写并给出了不同的实现版本，当我们在`main`函数中调用该方法时，这个方法就表现出了多态行为（同样的方法做了不同的事情）。
+
+### 图形用户界面（GUI）和游戏开发
+
+#### 基于tkinter模块的GUI
+
+Python GUI模块：`tkinker`, `wxPython`,`PyQt`,`PyGTK`
+
+使用tkinter开发GUI应用的5个基本步骤：
+
+1. 导入tkinter模块中我们需要的东西。
+2. 创建一个`顶层窗口对象`并用它来承载整个GUI应用。
+3. 在`顶层窗口对象`上添加GUI组件。
+4. 通过代码将这些GUI组件的功能组织起来。
+5. 进入主事件循环(main loop)。
+
+{% folding::使用tkinter的简单GUI %}
+
+```Python
+import tkinter
+import tkinter.messagebox
+
+
+def main():
+    flag = True
+
+    # 修改标签上的文字
+    def change_label_text():
+        nonlocal flag # nonlocal关键字见Day6
+        flag = not flag
+        color, msg = ('red', 'Hello, world!')\
+            if flag else ('blue', 'Goodbye, world!')
+        label.config(text=msg, fg=color)
+
+    # 确认退出
+    def confirm_to_quit():
+        if tkinter.messagebox.askokcancel('温馨提示', '确定要退出吗?'):
+            top.quit()
+
+    # 创建顶层窗口
+    top = tkinter.Tk()
+    # 设置窗口大小
+    top.geometry('240x160')
+    # 设置窗口标题
+    top.title('小游戏')
+    # 创建标签对象并添加到顶层窗口
+    label = tkinter.Label(top, text='Hello, world!', font='Arial -32', fg='red')
+    label.pack(expand=1)
+    # 创建一个装按钮的容器
+    panel = tkinter.Frame(top)
+    # 创建按钮对象 指定添加到哪个容器中 通过command参数绑定事件回调函数
+    button1 = tkinter.Button(panel, text='修改', command=change_label_text)
+    button1.pack(side='left')
+    button2 = tkinter.Button(panel, text='退出', command=confirm_to_quit)
+    button2.pack(side='right')
+    panel.pack(side='bottom')
+    # 开启主事件循环
+    tkinter.mainloop()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+{% endfolding %}
+
+**GUI应用通常是事件驱动式的**，之所以要进入主事件循环就是要监听鼠标、键盘等各种事件的发生并执行对应的代码对事件进行处理，因为事件会持续的发生，所以需要这样的一个循环一直运行着等待下一个事件的发生。
+
+**布局管理器**，通过布局管理器可以对控件进行定位，这三种布局管理器分别是：Placer（开发者提供控件的大小和摆放位置）、Packer（自动将控件填充到合适的位置）和Grid（基于网格坐标来摆放控件）
+
+#### 使用Pygame进行游戏开发
+
+移步原仓库，动手编写代码，体会逐步完善程序的过程。为了本笔记完整性，这里直接复制过来了。
+
+{% folding::Pytgame大球吃小球 %}
+
+```Python
+from enum import Enum, unique
+from math import sqrt
+from random import randint
+
+import pygame
+
+
+@unique
+class Color(Enum):
+    """颜色"""
+
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    GRAY = (242, 242, 242)
+
+    @staticmethod
+    def random_color():
+        """获得随机颜色"""
+        r = randint(0, 255)
+        g = randint(0, 255)
+        b = randint(0, 255)
+        return (r, g, b)
+
+
+class Ball(object):
+    """球"""
+
+    def __init__(self, x, y, radius, sx, sy, color=Color.RED):
+        """初始化方法"""
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.sx = sx
+        self.sy = sy
+        self.color = color
+        self.alive = True
+
+    def move(self, screen):
+        """移动"""
+        self.x += self.sx
+        self.y += self.sy
+        if self.x - self.radius <= 0 or self.x + self.radius >= screen.get_width():
+            self.sx = -self.sx
+        if self.y - self.radius <= 0 or self.y + self.radius >= screen.get_height():
+            self.sy = -self.sy
+
+    def eat(self, other):
+        """吃其他球"""
+        if self.alive and other.alive and self != other:
+            dx, dy = self.x - other.x, self.y - other.y
+            distance = sqrt(dx ** 2 + dy ** 2)
+            if distance < self.radius + other.radius \
+                    and self.radius > other.radius:
+                other.alive = False
+               	self.radius = self.radius + int(other.radius * 0.146)
+
+    def draw(self, screen):
+        """在窗口上绘制球"""
+        pygame.draw.circle(screen, self.color,
+                           (self.x, self.y), self.radius, 0)
+
+
+def main():
+    # 定义用来装所有球的容器
+    balls = []
+    # 初始化导入的pygame中的模块
+    pygame.init()
+    # 初始化用于显示的窗口并设置窗口尺寸
+    screen = pygame.display.set_mode((800, 600))
+    print(screen.get_width())
+    print(screen.get_height())
+    # 设置当前窗口的标题
+    pygame.display.set_caption('大球吃小球')
+    # 定义变量来表示小球在屏幕上的位置
+    x, y = 50, 50
+    running = True
+    # 开启一个事件循环处理发生的事件
+    while running:
+        # 从消息队列中获取事件并对事件进行处理
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                radius = randint(10, 100)
+                sx, sy = randint(-10, 10), randint(-10, 10)
+                color = Color.random_color()
+                ball = Ball(x, y, radius, sx, sy, color)
+                balls.append(ball)
+        screen.fill((255, 255, 255))
+        for ball in balls:
+            if ball.alive:
+                ball.draw(screen)
+            else:
+                balls.remove(ball)
+        pygame.display.flip()
+        # 每隔50毫秒就改变小球的位置再刷新窗口
+        pygame.time.delay(50)
+        for ball in balls:
+            ball.move(screen)
+            for other in balls:
+                ball.eat(other)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+{% endfolding %}
+
+### Day1-10总结
+
+学的不是很扎实，少写很多码，最近实在是太忙了，又想着要推进度。本来觉得100天很快就能学掉了，结果1-10的内容挺多的，需要多复盘。
