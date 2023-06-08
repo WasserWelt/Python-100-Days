@@ -23,6 +23,7 @@ print(f1(c=2, b=3, a=1))
 
 
 # 可变参数
+# 学会了！！
 def f2(*args):
     sum = 0
     for num in args:
@@ -36,17 +37,20 @@ print(f2())
 
 
 # 关键字参数
+# 学会了！！！
 def f3(**kw):
-    if 'name' in kw:
-        print('欢迎你%s!' % kw['name'])
-    elif 'tel' in kw:
-        print('你的联系电话是: %s!' % kw['tel'])
+    if "name" in kw:
+        print("欢迎你%s!" % kw["name"])
+    elif "tel" in kw:
+        print("你的联系电话是: %s!" % kw["tel"])
     else:
-        print('没找到你的个人信息!')
+        print("没找到你的个人信息!")
 
 
-param = {'name': '骆昊', 'age': 38}
+# 三种调用的方式
+param = {"name": "骆昊", "age": 38}
 f3(**param)
-f3(name='骆昊', age=38, tel='13866778899')
-f3(user='骆昊', age=38, tel='13866778899')
-f3(user='骆昊', age=38, mobile='13866778899')
+f3(name="骆昊", age=38, tel="13866778899")
+f3(user="骆昊", age=38, tel="13866778899")
+# 没有一个参数是可用的
+f3(user="骆昊", age=38, mobile="13866778899")

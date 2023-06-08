@@ -15,11 +15,11 @@ Date: 2018-03-06
 
 
 def main():
-    fruits = ['grape', 'apple', 'strawberry', 'waxberry']
-    fruits += ['pitaya', 'pear', 'mango']
+    fruits = ["grape", "apple", "strawberry", "waxberry"]
+    fruits += ["pitaya", "pear", "mango"]
     # 循环遍历列表元素
     for fruit in fruits:
-        print(fruit.title(), end=' ')
+        print(fruit.title(), end=" ")
     print()
     # 列表切片
     fruits2 = fruits[1:4]
@@ -33,5 +33,5 @@ def main():
     print(fruits5)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

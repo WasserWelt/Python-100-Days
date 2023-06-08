@@ -11,7 +11,7 @@ Date: 2018-03-06
 
 
 def main():
-    fruits = ['grape', '@pple', 'strawberry', 'waxberry']
+    fruits = ["grape", "@pple", "strawberry", "waxberry"]
     print(fruits)
     # 通过下标访问元素
     print(fruits[0])
@@ -20,19 +20,20 @@ def main():
     print(fruits[-2])
     # print(fruits[-5]) # IndexError
     # print(fruits[4])  # IndexError
-    fruits[1] = 'apple'
-    print(fruits)
+    fruits[1] = "apple"
+    print(fruits)  # ['grape', 'apple', 'strawberry', 'waxberry']
     # 添加元素
-    fruits.append('pitaya')
-    fruits.insert(0, 'banana')
+    fruits.append("pitaya")
+    fruits.insert(0, "banana")
     print(fruits)
+    # ['banana', 'grape', 'apple', 'strawberry', 'waxberry', 'pitaya']
     # 删除元素
     del fruits[1]
-    fruits.pop()
-    fruits.pop(0)
-    fruits.remove('apple')
+    print(fruits.pop())  # pitaya
+    print(fruits.pop(0))  # banana
+    fruits.remove("apple")
     print(fruits)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
