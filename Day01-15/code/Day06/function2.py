@@ -11,6 +11,7 @@ def gcd(x, y):
     if x > y:
         (x, y) = (y, x)
     for factor in range(x, 1, -1):
+        # 很暴力啊！
         if x % factor == 0 and y % factor == 0:
             return factor
     return 1

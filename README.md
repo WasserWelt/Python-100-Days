@@ -58,18 +58,96 @@ for i in range(row):
 
 ### Day6 函数和模块的使用
 
+#### 函数
+
 函数的定义、返回值
 
-函数的参数
+{% noteblock :: Python的内置函数%}
 
-- 默认值
+- 数学相关: abs / divmod / pow / round / min / max / sum
+- 序列相关: len / range / next / filter / map / sorted / slice / reversed
+- 类型转换: chr / ord / str / bool / int / float / complex / bin / oct / hex
+- 数据结构: dict / list / set / tuple
+- 其他函数: all / any / id / input / open / print / type
+
+{% endnoteblock %}
+
+#### 函数的参数
+
+- 位置参数
 - 可变参数`*args`
+- 关键字参数
+- 命名关键字参数
+- 默认值
+
+{% folding ::实例代码 %}
+
+```python
+
+# 参数默认值
+def f1(a, b=5, c=10):
+    return a + b * 2 + c * 3
+
+
+print(f1(1, 2, 3))
+print(f1(100, 200))
+print(f1(100))
+print(f1(c=2, b=3, a=1))
+
+
+# 可变参数
+def f2(*args):
+    sum = 0
+    for num in args:
+        sum += num
+    return sum
+
+
+print(f2(1, 2, 3))
+print(f2(1, 2, 3, 4, 5))
+print(f2())
+
+
+# 关键字参数
+def f3(**kw):
+    if 'name' in kw:
+        print('欢迎你%s!' % kw['name'])
+    elif 'tel' in kw:
+        print('你的联系电话是: %s!' % kw['tel'])
+    else:
+        print('没找到你的个人信息!')
+
+
+param = {'name': '骆昊', 'age': 38}
+f3(**param)
+f3(name='骆昊', age=38, tel='13866778899')
+f3(user='骆昊', age=38, tel='13866778899')
+f3(user='骆昊', age=38, mobile='13866778899')
+```
+
+{% endfolding %}
+
+#### 模块
 
 用模块管理函数（同名函数）
 
+{% noteblock :: Python常用模块%}
+
+- 运行时服务相关模块: copy / pickle / sys / ...
+- 数学相关模块: decimal / math / random / ...
+- 字符串处理模块: codecs / re / ...
+- 文件处理相关模块: shutil / gzip / ...
+- 操作系统服务相关模块: datetime / os / time / logging / io / ...
+- 进程和线程相关模块: multiprocessing / threading / queue
+- 网络应用相关模块: ftplib / http / smtplib / urllib / ...
+- Web编程相关模块: cgi / webbrowser
+- 数据处理和编码模块: base64 / csv / html.parser / json / xml / ...
+
+{% endnoteblock %}
+
 使用`__name__`管理可执行代码
 
-变量作用域
+### 变量作用域
 
 > “局部作用域”---》“嵌套作用域”---》“全局作用域”---》“内置作用域”
 >
@@ -87,11 +165,55 @@ def add(*args):
 if __name__ == '__main__':
     print('call foo()')
     foo()
-    print('call bar())
+    print('call bar()')
     bar()
 ```
 
+{% folding ::实例代码 %}
+
+```python
+# 局部作用域
+def foo1():
+    a = 5
+
+
+foo1()
+# print(a)  # NameError
+
+# 全局作用域
+b = 10
+
+
+def foo2():
+    print(b)
+
+
+foo2()  # 10
+
+
+def foo3():
+    b = 100  # 局部变量
+    print(b)
+
+
+foo3()  # 100
+print(b)  # 10
+
+
+def foo4():
+    global b
+    b = 200  # 全局变量
+    print(b)
+
+
+foo4()  # 200
+print(b)  # 200
+```
+
+{% endfolding %}
+
 ### Day7 字符串和常用数据结构
+
 {% note todo:要自己写一遍程序，学习大佬写法 %}
 
 #### 字符

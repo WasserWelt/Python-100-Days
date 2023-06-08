@@ -17,13 +17,13 @@ def myfilter(mystr):
 
 
 # help()
-print(chr(0x9a86))
-print(hex(ord('骆')))
-print(abs(-1.2345))
-print(round(-1.2345))
-print(pow(1.2345, 5))
+print(chr(0x9A86))  # 骆
+print(hex(ord('骆')))  # 0x9a86
+print(abs(-1.2345))  # 1.2345
+print(round(-1.2345))  # -1
+print(pow(1.2345, 5))  # 2.8671833852463537
 fruits = ['orange', 'peach', 'durian', 'watermelon']
-print(fruits[slice(1, 3)])
+print(fruits[slice(1, 3)])  # ['peach', 'durian']
 fruits2 = list(filter(myfilter, fruits))
-print(fruits)
-print(fruits2)
+print(fruits)  # ['orange', 'peach', 'durian', 'watermelon']
+print(fruits2)  # ['orange', 'durian']

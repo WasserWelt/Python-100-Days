@@ -23,23 +23,23 @@ def foo2():
     print(b)
 
 
-foo2()
+foo2()  # 10
 
 
 def foo3():
-    b = 100     # 局部变量
+    b = 100  # 局部变量
     print(b)
 
 
-foo3()
-print(b)
+foo3()  # 100
+print(b)  # 10
 
 
 def foo4():
     global b
-    b = 200     # 全局变量
+    b = 200  # 全局变量
     print(b)
 
 
-foo4()
-print(b)
+foo4()  # 200
+print(b)  # 200
